@@ -4,10 +4,10 @@
 #include <time.h>
 #include <string.h>
 #include <conio.h>
-
+#include <stdlib.h>
 int main()
 {
-    int i,j,x=-3;
+    int i,j,x,ldom;
     char mon[10];
     int day[5][7];
     time_t rawtime;
@@ -26,39 +26,63 @@ int main()
     printf("______________________________________________________________________________\n\n");
     if((time_->tm_mon+1)==1){
       strcpy(mon,"January");
+      x=0;
+      ldom=31;
     }
     else if((time_->tm_mon+1)==2){
       strcpy(mon,"February");
+      x=-3;
+      ldom=28;
     }
     else if((time_->tm_mon+1)==3){
       strcpy(mon,"March");
+      x=-3;
+      ldom=31;
     }
     else if((time_->tm_mon+1)==4){
       strcpy(mon,"April");
+      x=1;
+      ldom=30;
     }
     else if((time_->tm_mon+1)==5){
       strcpy(mon,"May");
+      x=-1;
+      ldom=31;
     }
     else if((time_->tm_mon+1)==6){
       strcpy(mon,"June");
+      x=-4;
+      ldom=30;
     }
     else if((time_->tm_mon+1)==7){
       strcpy(mon,"July");
+      x=1;
+      ldom=31;
     }
     else if((time_->tm_mon+1)==8){
       strcpy(mon,"August");
+      x=-2;
+      ldom=31;
     }
     else if((time_->tm_mon+1)==9){
       strcpy(mon,"September");
+      x=-5;
+      ldom=30;
     }
     else if((time_->tm_mon+1)==10){
       strcpy(mon,"October");
+      x=0;
+      ldom=31;
     }
     else if((time_->tm_mon+1)==11){
       strcpy(mon,"November");
+      x=-3;
+      ldom=30;
     }
     else{
       strcpy(mon,"December");
+      x=-5;
+      ldom=31;
     }
     //Changing day no.
     textcolor(14);
@@ -72,7 +96,7 @@ int main()
     //Placing days in array
     for(i=0;i<5;i++){
       for(j=0;j<7;j++){
-	if((x<1)||(x>28)){
+	if((x<1)||(x>ldom)){
 	  day[i][j]=0;
 	}
 	else{
@@ -81,6 +105,7 @@ int main()
 	x++;
       }
     }
+    gotoxy(100,100);
     printf("\n");
     printf("____________________________________________________________________________");
     printf("\n");
@@ -104,7 +129,7 @@ int main()
     printf("\n");
     for(i=0;i<5;i++){
       for(j=0;j<7;j++){
-	if((day[i][j]<1)||(day[i][j]>28)){
+	if((day[i][j]<1)||(day[i][j]>ldom)){
 	  printf(" \t");
 	}
 	else if(j==6){
@@ -123,6 +148,15 @@ int main()
       }
       printf("\n");
     }
-	getch();
+  gotoxy(60,7);
+  cprintf("BIRTHDAYS");
+  gotoxy(60,8);
+  printf("*Prashant: March 4");
+  gotoxy(60,9);
+  printf("..............");
+  gotoxy(60,10);
+  printf("...............");
+ getch();
   return 0;
 }
+
