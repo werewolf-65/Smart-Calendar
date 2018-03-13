@@ -1,37 +1,5 @@
-/*This is the front of our project. Welcome !!*/
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
-#include <conio.h>
-#include <stdlib.h>
-#include <dos.h>
-#include <graphics.h>
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\clock.h"
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\timer.h"
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\stopwa~1.h"
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\agecalc.h"
-
-//Birthday declarations
-struct birth
-	{
-	 char name[30];
-	 int year;
-	 int month;
-	 int day;
-	}friends[80];
-void birthd(void);
-//Events functions prototypes
-void event(void);
-void adddetails(int);
-void seedetails(int);
-int md,months;
-struct mon
- {
-     char events[2000];
-}m[12];
-//Date Conversion function prototypes
-
+#include<stdio.h>
+#include<conio.h>
 char day_of_week[][10] = {" ","SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
 int bs[][13]={
 	{2000,30,32,31,32,31,30,30,30,29,30,29,31},
@@ -126,238 +94,6 @@ int bs[][13]={
 		{2089, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30},
 		{2090, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30}
 };
-int IsLeapYear(int year);
-int IsRangeEng(int yy, int mm, int dd);
-int IsRangeNep(int yy, int mm, int dd);
-void EngToNep(int yy,int mm,int dd);
-void NepToEng(int yy,int mm,int dd);
-void dateconv(void);
-
-int main()
-{
-    int i,j,x,mode=10;
-    int y,m,d,ch; //for date conversion
-    char mon[10];
-    int day[5][7];
-    int ldom;
-    time_t rawtime;
-    struct tm*  time_;
-
-    time(&rawtime);
-    time_ = localtime(&rawtime);
-
-    clrscr();
-    printf("\t\t\t");
-    textcolor(GREEN);
-    cprintf("WELCOME TO SMART CALENDAR!");
-    printf("\n");
-
-    //Changing month no. into names
-    printf("______________________________________________________________________________\n\n");
-    if((time_->tm_mon+1)==1){
-      strcpy(mon,"January");
-      x=0;
-      ldom=31;
-    }
-    else if((time_->tm_mon+1)==2){
-      strcpy(mon,"February");
-      ldom=28;
-      x=-3;
-    }
-    else if((time_->tm_mon+1)==3){
-      strcpy(mon,"March");
-      ldom=31;
-      x=-3;
-    }
-    else if((time_->tm_mon+1)==4){
-      strcpy(mon,"April");
-      ldom=30;
-      x=1;
-    }
-    else if((time_->tm_mon+1)==5){
-      strcpy(mon,"May");
-      ldom=31;
-      x=-1;
-    }
-    else if((time_->tm_mon+1)==6){
-      strcpy(mon,"June");
-      ldom=30;
-      x=-4;
-    }
-    else if((time_->tm_mon+1)==7){
-      strcpy(mon,"July");
-      ldom=31;
-      x=1;
-    }
-    else if((time_->tm_mon+1)==8){
-      strcpy(mon,"August");
-      ldom=31;
-      x=-2;
-    }
-    else if((time_->tm_mon+1)==9){
-      strcpy(mon,"September");
-      ldom=30;
-      x=-5;
-    }
-    else if((time_->tm_mon+1)==10){
-      strcpy(mon,"October");
-      ldom=31;
-      x=0;
-    }
-    else if((time_->tm_mon+1)==11){
-      strcpy(mon,"November");
-      ldom=30;
-      x=-3;
-    }
-    else{
-      strcpy(mon,"December");
-      ldom=31;
-      x=-5;
-    }
-    //Changing day no.
-    textcolor(14);
-   cprintf("Time:%i:%i:%i", time_->tm_hour, time_->tm_min, time_->tm_sec);
-   printf("\t\t\t");
-   cprintf("Date:%s %i",mon,time_->tm_mday);
-   printf("\t\t\t");
-   cprintf("Year:%i",time_->tm_year+1900);
-   printf("\n");
-    //gotoxy(30,20);
-    //Placing days in array
-    for(i=0;i<5;i++){
-      for(j=0;j<7;j++){
-	if((x<1)||(x>ldom)){
-	  day[i][j]=0;
-	}
-	else{
-	  day[i][j]=x;
-	}
-	x++;
-      }
-    }
-    gotoxy(100,100);
-    printf("\n");
-    printf("____________________________________________________________________________");
-    printf("\n");
-    printf("\n");
-    //Days of Week Titles
-    textcolor(GREEN);
-    printf("\t\t\t");
-    cprintf("%s",mon);
-    printf("\n");
-    cprintf("SUN");
-    printf("\t");
-    cprintf("MON");
-    printf("\t");
-    cprintf("TUE");
-    printf("\t");
-    cprintf("WED");
-    printf("\t");
-    cprintf("THU");
-    printf("\t");
-    cprintf("FRI");
-    printf("\t");
-    cprintf("SAT");
-    printf("\t");
-    printf("\n");
-    for(i=0;i<5;i++){
-      for(j=0;j<7;j++){
-	if((day[i][j]<1)||(day[i][j]>ldom)){
-	  printf(" \t");
-	}
-	else if(j==6){
-	if(time_->tm_mday==day[i][j]){
-	textcolor(BLUE);
-	cprintf("%d",day[i][j]);
-	printf("\t");
-	continue;
-	}
-	 textcolor(YELLOW);
-	 cprintf("%d",day[i][j]);
-	 printf("\t");
-	}
-	else if(time_->tm_mday==day[i][j]){
-	textcolor(BLUE);
-	 cprintf("%d",day[i][j]);
-	 printf("\t");
-	}
-	else{
-	printf("%d\t",day[i][j]);
-      }
-      }
-      printf("\n");
-    }
-  gotoxy(60,7);
-  printf("|\t");
-  cprintf("BIRTHDAYS");
-  gotoxy(60,8);
-  printf("|->13:Anish");
-  gotoxy(60,9);
-  printf("|->18:Amrit");
-  gotoxy(60,10);
-  printf("|->30:Samar");
-  gotoxy(60,11);
-  printf("|\t");
-  cprintf("EVENTS");
-  gotoxy(60,12);
-  printf("|->17:Ghode Jatra");
-  gotoxy(60,13);
-  printf("|->25:Ram Nawami");
-  gotoxy(60,14);
-  printf("|->29:Mahavir Jayanti");
-  gotoxy(60,15);
-  printf("|\t");
-  cprintf("TO-DO-LIST");
-  gotoxy(60,16);
-  printf("|->Attend the class");
-  gotoxy(60,17);
-  printf("|->Submit the project");
-  gotoxy(60,18);
-  printf("|->..................");
-  gotoxy(1,15);
-  while(mode !=0){
-  textcolor(GREEN);
-  printf("______________________________________________________\n");
-  cprintf("USER MANUAL");
-  printf("\n");
-  printf("#Program Modes:1.To-Do-List 2.Date Converter 3.Dig. Clock\n4.Age Calculator 5.Events 6.Timer 7.Stopwatch\n8.Birthdays\n");
-  printf("#Enter the mode number to enter the mode\n");
-  printf("#Enter 0 to quit the program\n");
-  printf("_______________________________________________________________________________");
-  printf("\n");
-  cprintf("MAIN PROMPT:");
-  printf(">>>");
-  scanf("%d",&mode);
-  if(mode==3){
-  clo();
-  }
-  else if(mode==4){
-	agecalc();
-  }
-  else if(mode==6){
-  tim();
-  }
-  else if(mode==7){
-  stopw();
-  }
-  else if(mode==2){
-  dateconv();
-  }
-  else if(mode==8){
-       //	birthd();
-  }
-  else if(mode==5){
-  event();
-  }
-  else{
-     break;
-  }
-  }
-return 0;
-}
-
-
-//Date Conversion Functions Definition
 int IsLeapYear(int year)
 	{
 	    int a = year;
@@ -494,12 +230,8 @@ int IsRangeEng(int yy, int mm, int dd){
 		}
 
 		numDay=day;
-		textcolor(YELLOW);
-	       cprintf("The Equivalent Nepali Date is: ");
-	       cprintf("%d//%d//%d",y,m,total_nDays);
-	       printf("\n");
-	       cprintf("The day is %s",day_of_week[day]);
-	       printf("\n");
+	       printf("%d//%d//%d",y,m,total_nDays);
+	       printf("\nThe day is %s",day_of_week[day]);
 	       getch();
 	    }
 void NepToEng(int yy,int mm,int dd)
@@ -511,8 +243,7 @@ void NepToEng(int yy,int mm,int dd)
 	    int total_eDays=0; int total_nDays=0; int a=0; int day=4-1;		// initializations...
 	    int m = 0; int y = 0; int i=0;
 	    int j = 0;
-	    int k = 0;
-	    int numDay = 0;
+	    int k = 0;	int numDay = 0;
 
 	    int month[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
 	    int lmonth[13]={0,31,29,31,30,31,30,31,31,30,31,30,31};
@@ -560,18 +291,17 @@ void NepToEng(int yy,int mm,int dd)
 		    total_nDays--;
 		}
 		numDay = day;
-		textcolor(YELLOW);
-		cprintf("The Equivalent English date is: ");
-		printf("\n");
-		cprintf("%d//%d//%d",y,m,total_eDays);
-		printf("\n");
-		 cprintf("The day is %s",day_of_week[day]);
-		 printf("\n");
+
+		printf("\n%d//%d//%d",y,m,total_eDays);
+		 printf("\nThe day is %s",day_of_week[day]);
 		 getch();
 	    }
 
-    void dateconv(){
-    int ch,y,m,d;
+
+int main()
+{
+    int y,m,d,ch;
+    clrscr();
     printf("Enter 1 to convert date in ad to bs:\n");
     printf("Enter 2 to convert date in bs to ad:\n");
     printf("Press 3 to exit:");
@@ -579,96 +309,29 @@ void NepToEng(int yy,int mm,int dd)
     switch(ch)
     {
     case 1:
-	printf("Enter date in ad(YYYY/MM/DD)\n");
-	scanf("%d/%d/%d",&y,&m,&d);
+	printf("Enter date in ad\n");
+	scanf("%d%d%d",&y,&m,&d);
 	if(IsRangeEng(y,m,d)==0)
 	{
-	break;
+	return 0;
 	}
     EngToNep(y,m,d);
     break;
 
     case 2:
-	printf("Enter date in bs(YYYY/MM/DD):\n");
-	scanf("%d/%d/%d",&y,&m,&d);
+	printf("Enter date in bs:\n");
+	scanf("%d%d%d",&y,&m,&d);
 	if(IsRangeNep(y,m,d)==0)
 	{
-	    break;
+	    return 0;
 	}
 	NepToEng(y,m,d);
 	break;
     case 3:
-	break;
+	return 0;
     default:
-	break;
+	return 0;
     }
-    }
-
-//Events
-void event(void){
-    char ch;
-
-do{
-fflush(stdin);
-printf("Enter the month(1-12) e.g.1 for Jan=");
-scanf("%d",&months);
-
-    printf("1.See the events\n");
-    printf("2.Add the events\n");
-    printf("Enter your mode:>");
-    scanf("%d",&md);
-    if(md==1)
-  {
-	seedetails(months);
-    }
-else{
-	 adddetails(months);
-}
-printf("\n\nDo you want to continue.(y//n)");
-ch=getche();
-fflush(stdin);
-printf("\n");
-
-}while(ch!='n');
 }
 
-void adddetails(int n)
-{
-    FILE *fp;
-    char test;
-    fp=fopen("events.dat","ab");
-    if(fp==NULL)
-    {
-    printf("error");
-    }
-	do
-	{
-	    fflush(stdin);
-	    printf("\n");
-	    printf("Add the events[e.g.01 New Year's Day].Press ^ to terminate:");
-	    scanf("%[^'^']",m[n-1].events);
-	    fwrite(&m,sizeof(m),1,fp);
 
-	     printf("Do you want to add more events??(y//n)");
-	    test=getche();
-	}while(test=='y');
-	fclose(fp);
-return ;
-    }
-
-    void seedetails(int n)
-    {
-    FILE *fp;
-    fp=fopen("events.dat","rb");
-    if(fp==NULL)
-    {
-    printf("error");
-    }
-	   printf("Events of this month:>");
-	   while(fread(&m,sizeof(m),1,fp)==1)
-	   {
-	    printf("%s",m[n-1].events);
-	   }
-	   fclose(fp);
-	   return;
-    }
