@@ -7,10 +7,10 @@
 #include <stdlib.h>
 #include <dos.h>
 #include <graphics.h>
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\clock.h"
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\timer.h"
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\stopwa~1.h"
-#include "C:\\TURBOC3\\PROJECTS\\PROJECT\\SMARTCAL\\agecalc.h"
+#include ".\\clock.h"
+#include ".\\timer.h"
+#include ".\\stopwa~1.h" //You may have to edit these paths. 
+#include ".\\agecalc.h"
 
 //Birthday declarations
 struct birth
